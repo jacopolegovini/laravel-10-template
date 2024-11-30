@@ -15,31 +15,23 @@ class TangoSeeder extends Seeder
      */
     public function run(): void
     {
-        // Elimina tutti i dati esistenti nella tabella
-        DB::table('tango')->delete();
+        // Cancella i dati esistenti nella tabella
+        DB::table('tango')->truncate();
 
-        // Legge il contenuto del file JSON
-        $json = File::get('database/data/tango.json');
-        $data = json_decode($json);
+        // Leggi il file JSON
+        $json = File::get(database_path('data/tango.json'));
+        $data = json_decode($json, true); // Decodifica come array associativo
 
-        // Itera su ciascun oggetto nel JSON
+        // Itera su ogni elemento del JSON e salva i dati nel database
         foreach ($data as $element) {
-            $icons = $element->initial_position_icon; // Array lineare
-            $symbols = $element->initial_position_symbol; // Matrice
+            $icons = $element['initial_position_icon'];
+            $symbols = $element['initial_position_symbol'];
 
-            // Assicurati che il numero di simboli sia coerente con gli icone
-            $flatSymbols = [];
-            foreach ($symbols as $symbolRow) {
-                foreach ($symbolRow as $symbol) {
-                    $flatSymbols[] = $symbol; // Appiattisci la matrice dei simboli
-                }
-            }
-
-            // Itera attraverso gli icone e associa i simboli corrispondenti
-            foreach ($icons as $index => $iconValue) {
+            // Per ogni coppia di icon e symbol, inserisci una nuova riga nel database
+            foreach ($icons as $index => $icon) {
                 Tango::create([
-                    'initial_position_icon' => $iconValue,
-                    'initial_position_symbol' => $flatSymbols[$index] ?? null, // Usa `null` se non c'è un simbolo corrispondente
+                    'initial_position_icon' => $icon,
+                    'initial_position_symbol' => $symbols[$index] ?? null, // Usa null se non c'è un valore corrispondente
                 ]);
             }
         }

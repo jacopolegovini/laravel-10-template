@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tangos', function (Blueprint $table) {
+        Schema::create('tango', function (Blueprint $table) {
             $table->id();
             $table->integer('initial_position_icon')->nullable();
-            $table->integer('initial_position_symbol')->nullable();
+            $table->double('initial_position_symbol', 4, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tangos');
+        Schema::dropIfExists('tango');
     }
 };
