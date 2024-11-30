@@ -7,17 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tango extends Model
 {
-    use HasFactory;
+    // Specifica la tabella associata (opzionale se il nome è "tangos")
+    protected $table = 'tango';
 
-    protected $casts = [
-        'initial_position_icon' => 'array',
-        'initial_position_symbol' => 'array',
-    ];
-
+    // Specifica le colonne che possono essere compilate tramite `create()`
     protected $fillable = [
-
         'initial_position_icon',
-        'initial_position_symbol'
-
+        'initial_position_symbol',
     ];
 }
