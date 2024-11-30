@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tangos', function (Blueprint $table) {
             $table->id();
-            $table->json('initial_position_icon');
-            $table->json('initial_position_symbol');
+            $table->integer('initial_position_icon');
+            $table->integer('initial_position_symbol');
             $table->timestamps();
         });
     }

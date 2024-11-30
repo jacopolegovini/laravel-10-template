@@ -13,4 +13,11 @@ class Tango extends Model
         'initial_position_icon' => 'array',
         'initial_position_symbol' => 'array',
     ];
+
+    protected $fillable = [
+
+        'initial_position_icon',
+        'initial_position_symbol'
+
+    ];
 }
