@@ -22,16 +22,20 @@ class TangoSeeder extends Seeder
         $json = File::get(database_path('data/tango.json'));
         $data = json_decode($json, true); // Decodifica come array associativo
 
-        // Itera su ogni elemento del JSON e salva i dati nel database
+        // Itera su ogni elemento del JSON
         foreach ($data as $element) {
             $icons = $element['initial_position_icon'];
             $symbols = $element['initial_position_symbol'];
+            $finalIcons = $element['final_position_icon'];
 
-            // Per ogni coppia di icon e symbol, inserisci una nuova riga nel database
-            foreach ($icons as $index => $icon) {
+            // Verifica che tutti gli array abbiano la stessa lunghezza
+            $maxLength = max(count($icons), count($symbols), count($finalIcons));
+
+            for ($index = 0; $index < $maxLength; $index++) {
                 Tango::create([
-                    'initial_position_icon' => $icon,
-                    'initial_position_symbol' => $symbols[$index] ?? null, // Usa null se non c'è un valore corrispondente
+                    'initial_position_icon' => $icons[$index] ?? null,       // Usa null se il valore non esiste
+                    'initial_position_symbol' => $symbols[$index] ?? null, // Usa null se il valore non esiste
+                    'final_position_icon' => $finalIcons[$index] ?? null,  // Usa null se il valore non esiste
                 ]);
             }
         }
