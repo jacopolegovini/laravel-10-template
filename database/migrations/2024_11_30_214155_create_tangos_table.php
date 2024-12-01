@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('initial_position_icon')->nullable();
             $table->double('initial_position_symbol', 4, 2)->nullable();
+            $table->integer('final_position_icon')->nullable();
             $table->timestamps();
         });
     }
